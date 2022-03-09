@@ -1,0 +1,37 @@
+# brute force
+class Solution(object):
+    def twoSum(self, nums, target):
+        lenl = len(nums)
+        for a in range(lenl):
+            if a==lenl-1:
+                break 
+            for b in range(a+1,lenl):
+                if (nums[a] + nums[b])==target:
+                    return [a,b]
+            
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+       
+       
+ # hash map 
+ # python中字典key的搜索复杂度是O(1)的，因此我们列表中的元素作为key，序号作为value存储
+ class Solution(object):
+    def twoSum(self, nums, target):
+        hashmap = {}
+        for i in range(len(nums)):
+            complement = target-nums[i]
+            if complement in hashmap:
+                return [hashmap[complement],i]  # 直接搜索key是否在序列中，每次lookup是O(1)复杂度
+            hashmap[nums[i]] = i
+             
+            
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+               
+ 
