@@ -1,0 +1,24 @@
+非递归方法：三个游标--执行循环的条件
+递归方法...
+class Solution(object):
+    def search(self, nums, target):
+        high = len(nums)-1
+        low = 0
+        medium = (high+low)//2
+        while low <= high: # 执行循环的条件
+            if nums[medium] == target:
+                return medium
+            elif nums[medium] < target:
+                low = medium+1
+                medium = (high+low)//2
+            elif nums[medium] > target:
+                high = medium-1
+                medium = (high+low)//2
+            
+            
+        return -1
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
