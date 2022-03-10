@@ -1,0 +1,27 @@
+# The isBadVersion API is already defined for you.
+# @param version, an integer
+# @return a bool
+# def isBadVersion(version):
+
+class Solution(object):
+    def firstBadVersion(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        low = 1
+        high = n
+        me = (high+low)//2
+        while(low<high):
+            if isBadVersion(me):
+                high = me
+                me = (high+low)//2
+            
+            else:
+                low = me + 1  # 若好 low = me + 1，若坏，low不动 ：low始终指示第一个坏的的下界
+                me = (high+low)//2
+                
+        return low
+        
+        
+            
