@@ -1,0 +1,25 @@
+class Solution:
+    def average(self, salary: List[int]) -> float:
+        salary.sort()
+        return sum(salary[1:-1])/(len(salary)-2)
+        
+# 排序消耗了额外的复杂度，事实上没有排序的要求
+
+class Solution:
+    def average(self, salary: List[int]) -> float:
+        max_ = salary[0]
+        min_ = salary[0]
+        sum_ = 0
+        for i in range(len(salary)):
+            if salary[i] > max_:
+                max_ = salary[i]
+            elif salary[i] < min_:
+                min_ = salary[i]
+                
+            sum_ += salary[i]
+            
+        return (sum_-min_-max_)/(len(salary)-2)
+                
+# 时间复杂度大大降低
+
+列表由值查询键比较困难
