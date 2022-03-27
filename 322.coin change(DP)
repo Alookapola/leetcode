@@ -1,0 +1,85 @@
+**You are given an integer array `coins` representing coins of different denominations and an integer `amount` representing a total amount of money.**
+
+**Return *the fewest number of coins that you need to make up that amount*. If that amount of money cannot be made up by any combination of the coins, return `-1`.**
+
+**You may assume that you have an infinite number of each kind of coin.**
+
+
+
+
+##1：暴力枚举（递归）
+```stylus
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        def dp(n):
+            # 边界情况
+            if n < 0:
+                return -1
+            elif n == 0:
+                return 0  
+            
+            # 递归情况
+            res = float('INF') # 先定义为无穷大
+            for i in coins:
+                if dp(n - i) == -1:
+                    continue 
+                res = min(res, 1+dp(n - i))  # 只用求最小值时，两两比对
+            
+            if res == 'INF':
+                return -1
+            else:
+                return res
+            
+        return dp(amount)
+```
+
+
+##2：带有备忘录的递归，将过程中递归的结果存放下来，每个结果只需要计算一次
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        memo = dict()
+        def dp(n):
+            # 加入备忘录，避免重复计算***
+            if n in memo: return memo[n]
+            
+            # 边界情况
+            if n < 0:
+                return -1
+            elif n == 0:
+                return 0  
+            
+            # 递归情况
+            res = float('inf') # 先定义为无穷大
+            for i in coins:
+                if dp(n - i) == -1:
+                    continue 
+                res = min(res, 1+dp(n-i))  # 只用求最小值时，两两比对
+            
+            if res == float('inf'):  # 注意是float('inf')
+                memo[n] = -1
+            else:
+                memo[n] = res
+                
+            return memo[n]
+        
+        return dp(amount)
+        
+##3：dp版本，创建一个新列表，从头开始改值
+
+与备忘录版本相比，只需要定义一个边界情况（0），并且不需要显式地定义函数
+
+Memory usage占用少
+
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        dp = [amount+1] * (amount+1)  #  列表长度为amount+1（0-amount），每个数为amount+1（相当于inf）
+        dp[0] = 0
+        for i in range(amount + 1): # 计算dp[i]
+            for coin in coins: # 通过循环一遍coin中的值
+                if i < coin:
+                    continue
+                dp[i] = min(dp[i], 1 + dp[i - coin])
+                
+        
+        return dp[amount] if dp[amount] !=amount+1 else -1       
+
