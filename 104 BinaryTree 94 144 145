@@ -1,0 +1,16 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+#  root输入一个列表, root是一个TreeNode类型的变量
+#  存储的格式如：TreeNode{val: 9, left: None, right: None}
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root: # 可以这么写，root本身是一个二叉树节点数据类型
+            return 0
+        l = self.maxDepth(root.left)
+        r = self.maxDepth(root.right) #self.#
+        return(max(l,r)+1)
+        
