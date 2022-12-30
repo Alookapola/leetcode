@@ -46,3 +46,28 @@ class Solution(object):
         return max_profit1 + max_profit2
         
         # 有问题
+
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        # idea: (5 - 0) + (4 - 1) = 5 - (0 - (4 - 1))
+        # decompose the return：值得品味
+        # 四个标记: cost1, profit1, cost2, profit2
+
+        cost1 = 100000
+        profit1 = 0
+        cost2 = 100000
+        profit2 = 0
+
+        for price in prices:
+            cost1 = min(cost1, price)
+            profit1 = max(profit1, price - cost1)
+            cost2 = min(cost2, price - profit1)
+            profit2 = max(profit2, price - cost2)
+
+        return profit2
+        
+        # 这种做法拆分收益到四个部分，DP最大回撤的直接推广
