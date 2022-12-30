@@ -1,0 +1,48 @@
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        # 首先，找到max_profit的一段，肯定是从之前的最低开始
+        low = 100000
+        max_profit1 = 0
+
+        n = len(prices)
+        for i in range(n):
+            price = prices[i]
+            if price < low: # 再创新低
+                low = price
+                open_pos = i
+            else:
+                profit = price - low
+                if profit > max_profit1:
+                    max_profit1 = profit
+                    pos_pair = [open_pos, i] # open-close pair
+
+        if max_profit1 == 0:
+            return 0
+
+        # 左右两端分别计算，注意边界条件
+        low = 100000
+        max_profit2 = 0
+        for item in prices[:pos_pair[0]]:
+            if item < low: # 再创新低
+                low = item
+            else:
+                profit = item - low
+                if profit > max_profit2:
+                    max_profit2 = profit
+        
+        low = 100000
+        for item in prices[pos_pair[1]+1:]:
+            if item < low: # 再创新低
+                low = item
+            else:
+                profit = item - low
+                if profit > max_profit2:
+                    max_profit2 = profit
+
+        return max_profit1 + max_profit2
+        
+        # 有问题
